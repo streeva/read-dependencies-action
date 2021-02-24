@@ -1,0 +1,31 @@
+name: 'Read Dependencies'
+description: 'Read application manifest files and capture a list of depencies'
+inputs:
+  ecosystem:
+    description: 'Application package management ecosystem'
+    required: false
+    default: 'nuget'
+  directory:
+    description: 'Directory to walk for manifest files containing package references'
+    required: false
+    default: '.'
+  filename:
+    description: 'File to read for package references'
+    required: false
+    default: ''
+  outputfile:
+    description: 'A filename for the the output listing'
+    required: false
+    default: './dependencies.txt'
+runs:
+  using: 'docker'
+  image: 'docker://ghcr.io/streeva/read-packages:v1.0.1'
+  args:
+    - '-e' 
+    - ${{ inputs.ecosystem }}
+    - '-d' 
+    - ${{ inputs.directory }}
+    - '-f' 
+    - ${{ inputs.filename }}
+    - '-o' 
+    - ${{ inputs.outputfile }}
